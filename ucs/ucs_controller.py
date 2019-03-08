@@ -5,6 +5,7 @@ import re
 import sys
 import time
 from typing import Optional, Pattern, List, Union
+from util.assoc import checkassoc
 
 from ucsmsdk.mometa.compute.ComputePortDiscPolicy import ComputePortDiscPolicy
 from ucsmsdk.ucsexception import UcsException
@@ -94,7 +95,10 @@ class UcsClusterController:
         self._config_fi_existing_cluster(self.ucs_sessions['B'])
 
         # Pause to let the system stabilize before sending more commands
+        ## Adding check association for service profiles to validate servers are ready.
+        checkassoc()
         time.sleep(120)
+
 
         # Update some settings and add a backup user account
         self.disable_password_history(self.ucs_sessions['A'])
