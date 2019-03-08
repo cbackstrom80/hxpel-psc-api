@@ -1,0 +1,77 @@
+# From esxinstall.py
+
+podip: 172.20.1
+podgw: 172.20.1.1
+OrgName: IGNW
+my_Full_Path_Org: org-root/org-IGNW
+MgmtVlanName: MGMT
+MgmtVlanId: 1
+SpNameSeed: IGNWINSTALL
+MgmtIpPool: org-root/org-IGNW/ip-pool-hx-mgmt
+
+ip_blocks:
+  mgmt:
+    r_from: 172.20.1.220
+    to: 172.20.1.250
+    subnet: 255.255.255.0
+    def_gw: 172.20.1.1
+    prim_dns: 8.8.8.8
+    sec_dns: 8.8.4.4
+  kvm:
+    r_from: 172.20.1.100
+    to: 172.20.1.104
+    subnet: 255.255.255.0
+    def_gw: 172.20.1.1
+    prim_dns: 8.8.8.8
+    sec_dns: 8.8.4.4
+
+vmedia_ip_address: 172.20.1.69
+
+hx_installer:
+  vm_ip_address: 172.20.1.15
+  gw: 172.20.1.1
+  subnet_mask: 255.255.255.0
+  dns: 8.8.8.8
+  esx_server: 10.254.252.21
+
+labvc:
+  vclicensekey: 1463P-09K1K-Q8J9A-02CA0-05GJM
+  ip: 10.254.252.5
+  username: administrator@vsphere.local
+  password: Ignw!098
+
+podvc:
+  ip: 172.20.1.5
+  username: administrator@vsphere.local
+  password: Cisco1234!
+
+ucs:
+  cluster_ip: 172.20.1.10
+  cluster_gw: 172.20.1.1
+  cluster_netmask: 255.255.255.0
+  cluster_dns: 8.8.8.8
+  termserver_ip: 172.20.1.7
+  members:
+    A:
+      ip: 172.20.1.11
+      termserver_port: 4001
+    B:
+      ip: 172.20.1.12
+      termserver_port: 4002
+  credentials:
+    admin:
+      - admin
+      - Cisco1234!
+    ignw:
+      - ignw
+      - Ignw!098
+    admin_old:
+      - admin
+      - Cisco123
+
+
+tooltips:
+  redeployall: This will redeploy all the elements in your pod. (vMware Virtualcenter, Cisco Hyperfex Installer VM, and it will re-image all physical UCS servers and erase all UCS configuration)
+  redeployhx: This will destroy your HX Installer VM and re-deploy a brand new HX Installer OVA.
+  redeployvc: This will destroy your "POD" Virtualcenter VM and re-deploy a brand new VC instance.
+  redeployucs: This will erase the Cisco UCS configuration and re-install ESX on the BARE-Metal UCS servers.
