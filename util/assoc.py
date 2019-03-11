@@ -1,6 +1,9 @@
-
+import json
 import time
+import prettyprint
+
 from ucsmsdk.ucshandle import UcsHandle
+
 handle = UcsHandle("172.20.1.10", "admin", "Cisco1234!")
 
 handle.login()
@@ -30,9 +33,35 @@ def checkstatus(num):
             checkassoc(num)
 
 
+def getpods():
+    from ucsmsdk.ucshandle import UcsHandle
 
-checkstatus(3)
+    handle = UcsHandle("172.20.1.10", "admin", "Cisco1234!")
+
+    handle.login()
+
+    obj = handle.query_classid("ComputeRackUnit")
+
+    pods = {}
+    pods['compute'] = []
 
 
-handle.login()
+    for server in obj:
+        pods['compute'].append({
+            "ServerName": server.rn,
+            "Serial": server.serial,
+            "Model": server.model
+        })
+
+
+    return pods
+    handle.logout()
+
+
+
+
+
+
+
+
 
