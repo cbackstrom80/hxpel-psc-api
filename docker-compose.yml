@@ -1,0 +1,5 @@
+
+web:
+  build: ./api
+  ports:
+   - "5000:5000"

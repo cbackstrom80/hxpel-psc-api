@@ -1,25 +1,17 @@
+# this is an official Python runtime, used as the parent image
+FROM python:3.6.5-slim
 
+# set the working directory in the container to /app
+WORKDIR /app
 
-FROM python:3.6-alpine
+# add the current directory to the container as /app
+ADD . /app
 
-ENV CELERY_BROKER_URL redis://redis:6379/0
-ENV CELERY_RESULT_BACKEND redis://redis:6379/0
-ENV C_FORCE_ROOT true
+# execute everyone's favorite pip command, pip install -r
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-ENV HOST 0.0.0.0
-ENV PORT 5001
-ENV DEBUG true
+# unblock port 80 for the Flask app to run on
+EXPOSE 5000
 
-COPY . /api
-WORKDIR /api
-
-# install requirements
-RUN pip install -r requirements.txt
-
-# expose the app port
-EXPOSE 5001
-
-RUN pip install gunicorn
-
-# run the app server
-CMD ["gunicorn", "--bind", "0.0.0.0:5001", "--workers", "3", "app:app"]
+# execute the Flask app
+CMD ["python", "api.py"]

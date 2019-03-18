@@ -1,5 +1,5 @@
 from flask_restplus import Resource, Api, fields
-from flask import Flask
+from flask import Flask, request
 from util.pods import getpods
 from worker import celery
 import celery.states as states
@@ -97,17 +97,7 @@ class VCHealth(Resource):
         out = getpods(podnum)
         return out
 
-### DEPLOY CCP
-@ns.route('/ccpdeploy/<int:podnum>')
-class PodUser(Resource):
-    '''Class for Pod User Creation '''
 
-    @ns.doc('create_pod')
-    @ns.expect(poduser)
-    def post(self):
-        '''Create POD Users in Vault'''
-
-        return "User Created"
 
 
 
@@ -126,6 +116,6 @@ class PodUser(Resource):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
 
 
